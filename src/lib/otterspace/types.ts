@@ -16,4 +16,5 @@ export interface IBadge {
   id: string
   status: IBadgeStatus
   spec: IBadgeSpec
+  metadata: IBadgeSpecMetadata
 }

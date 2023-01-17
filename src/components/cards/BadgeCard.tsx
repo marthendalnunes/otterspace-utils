@@ -1,6 +1,6 @@
 import { MediaRenderer } from '@thirdweb-dev/react'
 
-interface BadgeCardProps {
+export interface BadgeCardProps {
   expiryDate?: string
   onClick?: () => void
   image: string

@@ -1,38 +1,27 @@
-import Badges from '@otterspace-xyz/contracts/out/Badges.sol/Badges.json' assert { type: 'json' }
-import { useContractWrite, usePrepareContractWrite } from 'wagmi'
-import { useState } from 'react'
 import { BadgeCard } from '@/components/cards/BadgeCard'
-import { OTTERSPACE_CONFIG } from '@/lib/otterspace/config'
 import type { IBadgeStatus, IBadge } from '@/lib/otterspace/types'
 
 interface BadgesViewProps {
   badges: IBadge[]
-  chainId: 5 | 10
+  handleClickBadge?: (tokenId: string, name: string, image: string) => void
   filterBy: (status: IBadgeStatus) => boolean
   title: string
   isLoading: boolean
   isSuccess: boolean
+  type?: 'BADGE' | 'RAFT'
 }
 
 export const BadgesView = ({
   badges,
-  chainId,
+  handleClickBadge = () => null,
   filterBy,
   title,
   isLoading,
-  isSuccess
+  isSuccess,
+  type = 'BADGE'
 }: BadgesViewProps) => {
-  const [selectedTokenId, setSelectedTokenId] = useState<string>('')
-  const { config } = usePrepareContractWrite({
-    address: OTTERSPACE_CONFIG[chainId].contractAddress,
-    abi: Badges.abi,
-    functionName: 'unequip',
-    args: [selectedTokenId]
-  })
-  const { write } = useContractWrite(config)
-
   return (
-    <div className="mx-auto mt-20 max-w-4xl">
+    <div className="mx-auto my-20 max-w-4xl">
       <h2 className="text-3xl font-semibold">{title}</h2>
       {isLoading ? (
         <h3>Loading...</h3>
@@ -44,12 +33,23 @@ export const BadgesView = ({
               return (
                 <BadgeCard
                   onClick={() => {
-                    setSelectedTokenId(badge.id.replace('badges:', ''))
-                    write?.()
+                    handleClickBadge(
+                      badge.id.replace('badges:', ''),
+                      badge.spec.metadata.name,
+                      badge.spec.metadata.image
+                    )
                   }}
                   key={badge.id}
-                  title={badge.spec.metadata.name}
-                  image={badge.spec.metadata.image}
+                  title={
+                    type === 'BADGE'
+                      ? badge.spec.metadata.name
+                      : badge.metadata.name
+                  }
+                  image={
+                    type === 'BADGE'
+                      ? badge.spec.metadata.image
+                      : badge.metadata.image
+                  }
                 />
               )
             })}
