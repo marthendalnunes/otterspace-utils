@@ -1,4 +1,5 @@
-export const OTTERSPACE_CONFIG = {
+export const DEFAULT_NETWORK = 5
+const OTTERSPACE_CONFIG = {
   // Goerli
   '5': {
     url: 'https://api.thegraph.com/subgraphs/name/otterspace-xyz/badges-goerli',
@@ -11,4 +12,11 @@ export const OTTERSPACE_CONFIG = {
     contractAddress: '0x7F9279B24D1c36Fa3E517041fdb4E8788dc63D25',
     blockExplorer: 'https://optimistic.etherscan.io/'
   }
+}
+
+export const getOtterspaceConfig = (chainId?: number) => {
+  if (chainId == 5 || chainId == 10) {
+    return OTTERSPACE_CONFIG[chainId]
+  }
+  return OTTERSPACE_CONFIG[DEFAULT_NETWORK]
 }
