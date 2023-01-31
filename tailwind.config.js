@@ -8,6 +8,9 @@ module.exports = {
     extend: {
       colors: {
         'dark-yellow': '#f1ece1'
+      },
+      minHeight: {
+        'screen-nav': 'calc(100vh - 96px)'
       }
     }
   },

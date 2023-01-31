@@ -1,4 +1,5 @@
 import { MediaRenderer } from '@thirdweb-dev/react'
+import { CardImage } from '../CardImage'
 
 export interface BadgeCardProps {
   expiryDate?: string
@@ -12,18 +13,17 @@ export const BadgeCard = ({
   title,
   onClick = () => null
 }: BadgeCardProps) => {
+  const formattedSrc = image.replace('ipfs://', 'https://ipfs.io/ipfs/')
   return (
     <div
       onClick={onClick}
-      className="mt-4 flex h-64 w-60 cursor-pointer flex-col items-center justify-center rounded-lg border border-dark-yellow"
+      className="mt-4 flex h-64 w-60 cursor-pointer flex-col items-center justify-center rounded-lg border border-stone-200 transition duration-150 hover:border-stone-500"
     >
-      <MediaRenderer
-        className="rounded-full"
-        src={image || '/otter-placeholder.jpeg'}
-        poster={'/otter-placeholder.jpeg'}
+      <CardImage
         alt="Badge Image"
-        height="120"
-        width="120"
+        src={formattedSrc || '/otter-placeholder.jpeg'}
+        width={120}
+        height={120}
       />
       <h3 className="mt-4 text-center text-lg font-bold">{title}</h3>
     </div>

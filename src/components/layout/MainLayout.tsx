@@ -9,7 +9,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <>
       <Navbar />
-      <main className="mx-auto min-h-[calc(100vh_-_96px)] max-w-7xl">
+      <main className="mx-auto min-h-[calc(100vh_-_96px)] max-w-4xl">
         {children}
       </main>
     </>
