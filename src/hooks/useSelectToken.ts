@@ -1,7 +1,5 @@
 import { useState } from 'react'
 import { useAccount, useNetwork } from 'wagmi'
-import { useQuery } from '@tanstack/react-query'
-import { getUserBadges } from '@/lib/otterspace/client'
 
 interface IToken {
   tokenId: string
@@ -9,7 +7,7 @@ interface IToken {
   image: string
 }
 
-export const useSelectBadge = () => {
+export const useSelectToken = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [selectedToken, setSelectedToken] = useState<IToken>({
     tokenId: '',
@@ -19,12 +17,7 @@ export const useSelectBadge = () => {
   const { address } = useAccount()
   const { chain } = useNetwork()
 
-  const badgesQuery = useQuery({
-    queryKey: ['user-badges', address || '', chain?.id],
-    queryFn: async () => getUserBadges(address, chain?.id)
-  })
-
-  const handleClickBadge = (tokenId: string, name: string, image: string) => {
+  const handleClick = (tokenId: string, name: string, image: string) => {
     setIsOpen(true)
     setSelectedToken({
       tokenId,
@@ -44,10 +37,10 @@ export const useSelectBadge = () => {
 
   return {
     address,
-    badgesQuery,
+    chain,
     selectedToken,
     isOpen,
-    handleClickBadge,
+    handleClick,
     handleClose
   }
 }

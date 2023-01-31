@@ -3,7 +3,7 @@ import { CardsGrid } from '@/components/layout/CardsGrid'
 import { SectionHeader } from '@/components/text/SectionHeader'
 import type { IBadgeStatus, IBadge } from '@/lib/otterspace/types'
 
-interface BadgesViewProps {
+interface GridViewProps {
   badges: IBadge[]
   handleClickBadge?: (tokenId: string, name: string, image: string) => void
   filterBy: (status: IBadgeStatus) => boolean
@@ -14,7 +14,7 @@ interface BadgesViewProps {
   type?: 'BADGE' | 'RAFT'
 }
 
-export const BadgesView = ({
+export const GridView = ({
   badges,
   handleClickBadge = () => null,
   filterBy,
@@ -23,7 +23,7 @@ export const BadgesView = ({
   isSuccess,
   isError,
   type = 'BADGE'
-}: BadgesViewProps) => {
+}: GridViewProps) => {
   const filteredBadges = badges?.filter(({ status }) => filterBy(status)) || []
 
   if (isLoading) {
@@ -41,9 +41,15 @@ export const BadgesView = ({
                 <BadgeCard
                   onClick={() => {
                     handleClickBadge(
-                      badge.id.replace('badges:', ''),
-                      badge.spec.metadata.name,
-                      badge.spec.metadata.image
+                      type === 'BADGE'
+                        ? badge.id.replace('badges:', '')
+                        : badge.id.replace('rafts:', ''),
+                      type === 'BADGE'
+                        ? badge.spec.metadata.name
+                        : badge.metadata.name,
+                      type === 'BADGE'
+                        ? badge.spec.metadata.image
+                        : badge.metadata.image
                     )
                   }}
                   key={badge.id}

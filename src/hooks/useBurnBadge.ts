@@ -1,13 +1,10 @@
 import {
-  useAccount,
   useNetwork,
   useContractWrite,
   usePrepareContractWrite,
   useWaitForTransaction
 } from 'wagmi'
-import { useQuery } from '@tanstack/react-query'
 import Badges from '@otterspace-xyz/contracts/out/Badges.sol/Badges.json' assert { type: 'json' }
-import { getUserBadges } from '@/lib/otterspace/client'
 import { getOtterspaceConfig } from '@/lib/otterspace/config'
 
 interface useBurnBadgeProps {
@@ -15,16 +12,10 @@ interface useBurnBadgeProps {
 }
 
 export const useBurnBadge = ({ tokenId }: useBurnBadgeProps) => {
-  const { address } = useAccount()
   const { chain } = useNetwork()
 
-  const badgesQuery = useQuery({
-    queryKey: ['user-badges', address || '', chain?.id],
-    queryFn: async () => getUserBadges(address, chain?.id)
-  })
-
   const { config } = usePrepareContractWrite({
-    address: getOtterspaceConfig(chain?.id).contractAddress,
+    address: getOtterspaceConfig(chain?.id).badgeContractAddress,
     abi: Badges.abi,
     functionName: 'unequip',
     args: [tokenId]
@@ -39,7 +30,6 @@ export const useBurnBadge = ({ tokenId }: useBurnBadgeProps) => {
 
   return {
     chainId: chain?.id,
-    badgesQuery,
     badgeContractWrite,
     badgeWaitForTransaction,
     onBurn

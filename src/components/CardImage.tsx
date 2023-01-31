@@ -12,7 +12,7 @@ interface CardImageProps {
 
 export const CardImage = ({ alt, src, height, width }: CardImageProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
-  console.log('isLoading', isLoading)
+
   return (
     <>
       <div className="relative">
@@ -22,15 +22,12 @@ export const CardImage = ({ alt, src, height, width }: CardImageProps) => {
           width={width}
         />
         <Image
-          className={classNames({ visible: isLoading })}
+          className={classNames('rounded-full', { visible: isLoading })}
           alt={alt}
           src={src}
           height={height}
           width={width}
-          onLoadingComplete={() => {
-            console.log('loaded')
-            setIsLoading(false)
-          }}
+          onLoad={() => setIsLoading(false)}
         />
       </div>
     </>

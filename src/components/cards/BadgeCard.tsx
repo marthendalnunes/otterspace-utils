@@ -1,5 +1,4 @@
-import { MediaRenderer } from '@thirdweb-dev/react'
-import { CardImage } from '../CardImage'
+import { CardImage } from '@/components/CardImage'
 
 export interface BadgeCardProps {
   expiryDate?: string
@@ -13,7 +12,7 @@ export const BadgeCard = ({
   title,
   onClick = () => null
 }: BadgeCardProps) => {
-  const formattedSrc = image.replace('ipfs://', 'https://ipfs.io/ipfs/')
+  const formattedSrc = image?.replace('ipfs://', 'https://ipfs.io/ipfs/')
   return (
     <div
       onClick={onClick}
