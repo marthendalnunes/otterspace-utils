@@ -12,6 +12,7 @@ interface CardImageProps {
 
 export const CardImage = ({ alt, src, height, width }: CardImageProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
+  const [imgSrc, setImgSrc] = useState<string>(src)
 
   return (
     <>
@@ -24,10 +25,14 @@ export const CardImage = ({ alt, src, height, width }: CardImageProps) => {
         <Image
           className={classNames('rounded-full', { visible: isLoading })}
           alt={alt}
-          src={src}
+          src={imgSrc}
           height={height}
           width={width}
           onLoad={() => setIsLoading(false)}
+          onError={() => {
+            setIsLoading(false)
+            setImgSrc('/otter-placeholder.jpeg')
+          }}
         />
       </div>
     </>
