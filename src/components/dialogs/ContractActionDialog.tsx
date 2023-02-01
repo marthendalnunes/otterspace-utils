@@ -14,6 +14,7 @@ interface ContractActionDialogProps extends BadgeCardProps, BaseDialogProps {
   isLoadingSign: boolean
   isSuccess: boolean
   isError: boolean
+  isValidAction?: boolean
   chainId?: number
   errorMessage?: string
   transactionHash?: string
@@ -33,6 +34,7 @@ export const ContractActionDialog = ({
   isSuccess,
   isError,
   isOpen,
+  isValidAction = true,
   chainId,
   errorMessage,
   transactionHash,
@@ -83,7 +85,7 @@ export const ContractActionDialog = ({
               </button>
               <button
                 type="submit"
-                disabled={isLoadingSign}
+                disabled={isLoadingSign || !isValidAction}
                 className="w-28 rounded-lg bg-red-600 px-3 py-2 text-lg font-semibold text-white disabled:bg-red-600/70 "
               >
                 {isLoadingSign ? 'Waiting' : buttonLabel}

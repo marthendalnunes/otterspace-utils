@@ -6,7 +6,7 @@ import type { IBadgeStatus, IBadge } from '@/lib/otterspace/types'
 interface GridViewProps {
   badges: IBadge[]
   handleClickBadge?: (tokenId: string, name: string, image: string) => void
-  filterBy: (status: IBadgeStatus) => boolean
+  filterBy?: (status: IBadgeStatus) => boolean
   title: string
   isLoading: boolean
   isSuccess: boolean
@@ -24,7 +24,9 @@ export const GridView = ({
   isError,
   type = 'BADGE'
 }: GridViewProps) => {
-  const filteredBadges = badges?.filter(({ status }) => filterBy(status)) || []
+  const filteredBadges = filterBy
+    ? badges?.filter(({ status }) => filterBy(status)) || []
+    : badges
 
   if (isLoading) {
     return null

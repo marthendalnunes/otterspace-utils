@@ -15,6 +15,20 @@ export const GET_USER_RAFTS = gql`
   }
 `
 
+export const GET_RAFT_BADGE_SPECS = gql`
+  query Raft($id: String) {
+    raft(id: $id) {
+      specs {
+        id
+        metadata {
+          name
+          image
+        }
+      }
+    }
+  }
+`
+
 export const GET_USER_BADGES = gql`
   query Badge($owner: String) {
     badges(where: { owner: $owner }) {
@@ -32,6 +46,18 @@ export const GET_USER_BADGES = gql`
           description
         }
         uri
+      }
+    }
+  }
+`
+
+export const GET_BADGE_SPEC_BADGES = gql`
+  query BadgeSpec($id: String) {
+    badgeSpec(id: $id) {
+      badges {
+        id
+        status
+        owner
       }
     }
   }

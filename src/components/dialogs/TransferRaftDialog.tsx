@@ -1,8 +1,9 @@
 import { useState } from 'react'
+import { useAccount } from 'wagmi'
 import { BaseDialogProps } from '@/components/dialogs/BaseDialog'
 import { ContractActionDialog } from '@/components/dialogs/ContractActionDialog'
 import { BadgeCardProps } from '@/components/cards/BadgeCard'
-import { useTransferRaft } from '@/hooks/useTransferRaft'
+import { useOtterspaceContractsWrite } from '@/hooks/useOtterspaceContractsWrite'
 
 interface TransferBadgeDialogProps extends BadgeCardProps, BaseDialogProps {
   tokenId: string
@@ -15,13 +16,23 @@ export const TransferRaftDialog = ({
   title
 }: TransferBadgeDialogProps) => {
   const [toAddress, setToAddress] = useState<string>('')
+  const { address } = useAccount()
 
-  const { chainId, onTransfer, raftContractWrite, raftWaitForTransaction } =
-    useTransferRaft({ tokenId, toAddress })
+  const {
+    chainId,
+    prepareContractWrite,
+    contractWrite,
+    waitForTransaction,
+    onWrite
+  } = useOtterspaceContractsWrite({
+    args: [address, toAddress, tokenId],
+    contract: 'RAFT',
+    functionName: 'safeTransferFrom(address,address,uint256)'
+  })
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    onTransfer()
+    onWrite()
   }
 
   return (
@@ -32,17 +43,18 @@ export const TransferRaftDialog = ({
       buttonLabel="Transfer"
       handleSubmit={handleSubmit}
       chainId={chainId}
-      transactionHash={raftWaitForTransaction.data?.transactionHash}
-      isLoadingSign={raftContractWrite.isLoading}
-      isLoadingTransaction={raftWaitForTransaction.isLoading}
-      isSuccess={raftWaitForTransaction.isSuccess}
-      isError={raftWaitForTransaction.isError}
-      errorMessage={raftWaitForTransaction.error?.message}
+      transactionHash={waitForTransaction.data?.transactionHash}
+      isLoadingSign={contractWrite.isLoading}
+      isLoadingTransaction={waitForTransaction.isLoading}
+      isSuccess={waitForTransaction.isSuccess}
+      isError={waitForTransaction.isError}
+      errorMessage={waitForTransaction.error?.message}
       isOpen={isOpen}
       onClose={() => {
         onClose()
-        raftContractWrite.reset()
+        contractWrite.reset()
       }}
+      isValidAction={prepareContractWrite.isSuccess}
       image={image}
       title={title}
     >

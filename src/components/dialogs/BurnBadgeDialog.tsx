@@ -2,7 +2,7 @@ import type { BadgeCardProps } from '@/components/cards/BadgeCard'
 import { ContractActionDialog } from '@/components/dialogs/ContractActionDialog'
 
 import { BaseDialogProps } from '@/components/dialogs/BaseDialog'
-import { useBurnBadge } from '@/hooks/useBurnBadge'
+import { useOtterspaceContractsWrite } from '@/hooks/useOtterspaceContractsWrite'
 
 interface BurnBadgeDialogProps extends BadgeCardProps, BaseDialogProps {
   tokenId: string
@@ -15,14 +15,16 @@ export const BurnBadgeDialog = ({
   image,
   title
 }: BurnBadgeDialogProps): JSX.Element => {
-  const { badgeContractWrite, badgeWaitForTransaction, chainId, onBurn } =
-    useBurnBadge({
-      tokenId
+  const { contractWrite, waitForTransaction, chainId, onWrite } =
+    useOtterspaceContractsWrite({
+      args: [tokenId],
+      contract: 'BADGES',
+      functionName: 'unequip'
     })
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    onBurn()
+    onWrite()
   }
 
   return (
@@ -33,16 +35,16 @@ export const BurnBadgeDialog = ({
       buttonLabel="Burn"
       handleSubmit={handleSubmit}
       chainId={chainId}
-      transactionHash={badgeWaitForTransaction.data?.transactionHash}
-      isLoadingSign={badgeContractWrite.isLoading}
-      isLoadingTransaction={badgeWaitForTransaction.isLoading}
-      isSuccess={badgeWaitForTransaction.isSuccess}
-      isError={badgeWaitForTransaction.isError}
-      errorMessage={badgeWaitForTransaction.error?.message}
+      transactionHash={waitForTransaction.data?.transactionHash}
+      isLoadingSign={contractWrite.isLoading}
+      isLoadingTransaction={waitForTransaction.isLoading}
+      isSuccess={waitForTransaction.isSuccess}
+      isError={waitForTransaction.isError}
+      errorMessage={waitForTransaction.error?.message}
       isOpen={isOpen}
       onClose={() => {
         onClose()
-        badgeContractWrite.reset()
+        contractWrite.reset()
       }}
       image={image}
       title={title}

@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query'
 import { GridView } from '@/components/views/GridView'
 import { getUserRafts } from '@/lib/otterspace/client'
-import { TransferRaftDialog } from '@/components/dialogs/TransferRaftDialog'
 import { BadgesViewSkeleton } from '@/components/loading/BadgesViewSkeleton'
 import { EmptyView } from '@/components/views/EmptyView'
 import { useSelectToken } from '@/hooks/useSelectToken'
+import { RevokeBadgeDialog } from '@/components/dialogs/RevokeBadgeDialog'
 
-export const TransferRaftView = () => {
+export const RevokeBadgeView = () => {
   const { address, chain, selectedToken, isOpen, handleClick, handleClose } =
     useSelectToken()
   const raftsQuery = useQuery({
@@ -28,7 +28,7 @@ export const TransferRaftView = () => {
 
   return (
     <>
-      <TransferRaftDialog
+      <RevokeBadgeDialog
         image={selectedToken?.image}
         tokenId={selectedToken?.tokenId}
         title={selectedToken?.name}
@@ -36,7 +36,7 @@ export const TransferRaftView = () => {
         onClose={handleClose}
       />
       <GridView
-        title="Select the raft to transfer"
+        title="Select the raft to revoke a badge"
         badges={raftsQuery.data?.rafts}
         type="RAFT"
         handleClickBadge={handleClick}
