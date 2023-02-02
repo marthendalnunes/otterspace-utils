@@ -1,5 +1,5 @@
 import { BadgeCard } from '@/components/cards/BadgeCard'
-import { CardsGrid } from '@/components/layout/CardsGrid'
+import { BaseGrid } from '@/components/layout/BaseGrid'
 import { SectionHeader } from '@/components/text/SectionHeader'
 import type { IBadgeStatus, IBadge } from '@/lib/otterspace/types'
 
@@ -37,7 +37,7 @@ export const GridView = ({
       {isSuccess && filteredBadges.length > 0 ? (
         <>
           <SectionHeader title={title} />
-          <CardsGrid>
+          <BaseGrid>
             {filteredBadges.map((badge: IBadge) => {
               return (
                 <BadgeCard
@@ -71,7 +71,7 @@ export const GridView = ({
                 />
               )
             })}
-          </CardsGrid>
+          </BaseGrid>
         </>
       ) : isError ? (
         <h3 className="text-red-500">An error ocurred</h3>
