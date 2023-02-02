@@ -55,7 +55,11 @@ export const TransferRaftDialog = ({
         contractWrite.reset()
       }}
       isValidAction={prepareContractWrite.isSuccess}
-      image={image}
+      image={
+        image
+          .split('.ipfs.nftstorage.link')[0]
+          ?.replace('https://', 'https://ipfs.io/ipfs/') || image
+      }
       title={title}
     >
       <div className="flex flex-col">

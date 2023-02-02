@@ -6,7 +6,7 @@ import { EmptyView } from '@/components/views/EmptyView'
 import { useSelectToken } from '@/hooks/useSelectToken'
 import { ReinstateRevokeBadgeDialog } from '@/components/dialogs/ReinstateRevokeBadgeDialog'
 
-export const RevokeBadgeView = () => {
+export const ReinstateBadgeView = () => {
   const { address, chain, selectedToken, isOpen, handleClick, handleClose } =
     useSelectToken()
   const raftsQuery = useQuery({
@@ -29,7 +29,7 @@ export const RevokeBadgeView = () => {
   return (
     <>
       <ReinstateRevokeBadgeDialog
-        type="REVOKE"
+        type="REINSTATE"
         image={selectedToken?.image}
         tokenId={selectedToken?.tokenId}
         title={selectedToken?.name}
@@ -37,7 +37,7 @@ export const RevokeBadgeView = () => {
         onClose={handleClose}
       />
       <GridView
-        title="Select the raft to revoke a badge"
+        title="Select the raft to reinstate a badge"
         badges={raftsQuery.data?.rafts}
         type="RAFT"
         handleClickBadge={handleClick}

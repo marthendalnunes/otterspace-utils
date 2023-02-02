@@ -36,7 +36,7 @@ export const CardImage = ({
       <Image
         className={classNames('rounded-full w-full', { visible: isLoading })}
         alt={alt}
-        src={imgSrc}
+        src={imgSrc || '/otter-placeholder.jpeg'}
         height={height}
         width={width}
         onLoad={() => setIsLoading(false)}

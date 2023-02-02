@@ -10,16 +10,21 @@ import { BadgeOwnerComboBox } from '@/components/selectors/BadgeOwnerComboBox'
 import type { IBadge, IBadgeSpec } from '@/lib/otterspace/types'
 import { useNetwork } from 'wagmi'
 
-interface RevokeBadgeDialogProps extends BadgeCardProps, BaseDialogProps {
+interface ReinstateRevokeBadgeDialogProps
+  extends BadgeCardProps,
+    BaseDialogProps {
+  type: 'REINSTATE' | 'REVOKE'
   tokenId: string
 }
-export const RevokeBadgeDialog = ({
+
+export const ReinstateRevokeBadgeDialog = ({
+  type,
   tokenId,
   isOpen,
   onClose,
   image,
   title
-}: RevokeBadgeDialogProps) => {
+}: ReinstateRevokeBadgeDialogProps) => {
   const [selectedBadgeSpec, setSelectedBadgeSpec] = useState<IBadgeSpec>()
   const [selectedBadge, setSelectedBadge] = useState<IBadge>()
   const selectedBadgeId = selectedBadge?.id?.replace('badges:', '')
@@ -37,8 +42,10 @@ export const RevokeBadgeDialog = ({
     queryFn: async () => getBadgeSpecBadges(selectedBadgeSpec?.id || '')
   })
   const badges: IBadge[] =
-    badgeSpecBadgesQuery?.data?.badgeSpec?.badges?.filter(
-      (badge: IBadge) => badge.status !== 'REVOKED' && badge.status !== 'BURNED'
+    badgeSpecBadgesQuery?.data?.badgeSpec?.badges?.filter((badge: IBadge) =>
+      type == 'REINSTATE'
+        ? badge.status === 'REVOKED'
+        : badge.status !== 'REVOKED' && badge.status !== 'BURNED'
     ) || []
 
   const {
@@ -48,9 +55,12 @@ export const RevokeBadgeDialog = ({
     waitForTransaction,
     onWrite
   } = useOtterspaceContractsWrite({
-    args: [Number(tokenId), selectedBadgeId, 3],
+    args:
+      type == 'REINSTATE'
+        ? [tokenId, selectedBadgeId]
+        : [tokenId, selectedBadgeId, 3],
     contract: 'BADGES',
-    functionName: 'revokeBadge'
+    functionName: type == 'REINSTATE' ? 'reinstateBadge' : 'revokeBadge'
   })
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -64,10 +74,14 @@ export const RevokeBadgeDialog = ({
 
   return (
     <ContractActionDialog
-      initialTitle="Do you want to revoke a badge with this raft?"
-      loadingTitle="Revoking badge..."
-      successTitle="Badge revoked!"
-      buttonLabel="Revoke"
+      initialTitle={`Do you want to ${
+        type == 'REINSTATE' ? 'reinstate' : 'revoke'
+      } a badge with this raft?`}
+      loadingTitle={`${
+        type == 'REINSTATE' ? 'Reinstating' : 'Revoking'
+      } badge...`}
+      successTitle={`Badge ${type == 'REINSTATE' ? 'reinstated' : 'revoked'}!`}
+      buttonLabel={`${type == 'REINSTATE' ? 'Reinstate' : 'Revoke'}`}
       handleSubmit={handleSubmit}
       chainId={chainId}
       transactionHash={waitForTransaction.data?.transactionHash}
