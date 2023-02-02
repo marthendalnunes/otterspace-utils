@@ -64,6 +64,9 @@ export const GridView = ({
                     type === 'BADGE'
                       ? badge.spec.metadata.image
                       : badge.metadata.image
+                          .split('.ipfs.nftstorage.link')[0]
+                          ?.replace('https://', 'https://ipfs.io/ipfs/') ||
+                        badge.metadata.image
                   }
                 />
               )
