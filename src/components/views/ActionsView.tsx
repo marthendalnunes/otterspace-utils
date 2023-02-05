@@ -5,21 +5,23 @@ import { BaseCard } from '@/components/cards/BaseCard'
 export const ActionsView = () => {
   return (
     <>
-      <h1 className="mt-32 mb-8 text-center text-4xl font-bold">
-        Otterspace Utils
-      </h1>
-      <BaseGrid>
-        {actions.map(({ title, description, href }) => (
-          <BaseCard key={title}>
-            <Link href={href}>
-              <div className="w-72 py-10 px-6">
-                <h3 className="text-xl font-semibold">{title} →</h3>
-                <p className="mt-1">{description}</p>
-              </div>
-            </Link>
-          </BaseCard>
-        ))}
-      </BaseGrid>
+      <section className="my-8 flex flex-col gap-y-10 sm:mt-32">
+        <h1 className="hidden text-center text-4xl font-bold sm:block">
+          Otterspace Utils
+        </h1>
+        <BaseGrid>
+          {actions.map(({ title, description, href }) => (
+            <BaseCard key={title}>
+              <Link href={href}>
+                <div className="w-72 py-10 px-6">
+                  <h3 className="text-xl font-semibold">{title} →</h3>
+                  <p className="mt-1">{description}</p>
+                </div>
+              </Link>
+            </BaseCard>
+          ))}
+        </BaseGrid>
+      </section>
     </>
   )
 }

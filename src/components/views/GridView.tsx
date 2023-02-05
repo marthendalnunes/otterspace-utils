@@ -36,7 +36,7 @@ export const GridView = ({
     <section className="mx-auto my-20">
       {isSuccess && filteredBadges.length > 0 ? (
         <>
-          <SectionHeader title={title} />
+          <SectionHeader className="mb-8" title={title} />
           <BaseGrid>
             {filteredBadges.map((badge: IBadge) => {
               return (

@@ -72,7 +72,7 @@ export const ContractActionDialog = ({
         </>
       ) : (
         <>
-          <DialogTitle title={initialTitle} />
+          <DialogTitle className="mb-4" title={initialTitle} />
           <BadgeCard image={image} title={title} />
           <form onSubmit={handleSubmit} className="mt-6">
             {children}
