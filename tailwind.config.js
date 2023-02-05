@@ -11,6 +11,9 @@ module.exports = {
       },
       minHeight: {
         'screen-nav': 'calc(100vh - 96px)'
+      },
+      screens: {
+        xs: '480px'
       }
     }
   },
