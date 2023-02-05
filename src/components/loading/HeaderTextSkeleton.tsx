@@ -1,3 +1,5 @@
 export const HeaderTextSkeleton = () => {
-  return <div className="h-12 w-80 animate-pulse rounded-lg bg-stone-200"></div>
+  return (
+    <div className="mx-auto h-12 w-96 animate-pulse rounded-lg border bg-stone-200" />
+  )
 }
