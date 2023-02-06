@@ -33,13 +33,14 @@ export const ReinstateRevokeBadgeDialog = ({
 
   const raftBadgesQuery = useQuery({
     queryKey: ['raft-badges', chain?.id, tokenId],
-    queryFn: async () => getRaftBadges(tokenId)
+    queryFn: async () => getRaftBadges(tokenId, chain?.id)
   })
   const specs: IBadgeSpec[] = raftBadgesQuery?.data?.raft?.specs || []
 
   const badgeSpecBadgesQuery = useQuery({
     queryKey: ['badge-spec-badges', chain?.id, selectedBadgeSpec?.id],
-    queryFn: async () => getBadgeSpecBadges(selectedBadgeSpec?.id || '')
+    queryFn: async () =>
+      getBadgeSpecBadges(selectedBadgeSpec?.id || '', chain?.id)
   })
   const badges: IBadge[] =
     badgeSpecBadgesQuery?.data?.badgeSpec?.badges?.filter((badge: IBadge) =>

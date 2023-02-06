@@ -1,4 +1,4 @@
-export const DEFAULT_NETWORK = 5
+export const DEFAULT_NETWORK = 10
 const OTTERSPACE_CONFIG = {
   // Goerli
   '5': {

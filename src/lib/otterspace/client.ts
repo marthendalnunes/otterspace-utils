@@ -7,22 +7,31 @@ import {
   GET_BADGE_SPEC_BADGES
 } from '@/lib/otterspace/queries'
 
-export const getUserBadges = async (address?: string, chainId?: number) =>
+export const getUserBadges = async (
+  address: string | undefined,
+  chainId: number | undefined
+) =>
   request(getOtterspaceConfig(chainId).url, GET_USER_BADGES, {
     owner: address
   })
 
-export const getUserRafts = async (address?: string, chainId?: number) =>
+export const getUserRafts = async (
+  address: string | undefined,
+  chainId: number | undefined
+) =>
   request(getOtterspaceConfig(chainId).url, GET_USER_RAFTS, {
     owner: address
   })
 
-export const getRaftBadges = async (id: string, chainId?: number) =>
+export const getRaftBadges = async (id: string, chainId: number | undefined) =>
   request(getOtterspaceConfig(chainId).url, GET_RAFT_BADGE_SPECS, {
     id: `rafts:${id}`
   })
 
-export const getBadgeSpecBadges = async (id: string, chainId?: number) =>
+export const getBadgeSpecBadges = async (
+  id: string,
+  chainId: number | undefined
+) =>
   request(getOtterspaceConfig(chainId).url, GET_BADGE_SPEC_BADGES, {
     id
   })
