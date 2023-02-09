@@ -10,7 +10,7 @@ module.exports = {
         'dark-yellow': '#f1ece1'
       },
       minHeight: {
-        'screen-nav': 'calc(100vh - 96px)'
+        'screen-nav': 'calc(100vh - 176px)'
       },
       screens: {
         xs: '480px'

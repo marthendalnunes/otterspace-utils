@@ -32,9 +32,13 @@ export const GridView = ({
     return null
   }
 
+  if (filteredBadges.length === 0) {
+    return null
+  }
+
   return (
-    <section className="mx-auto my-20">
-      {isSuccess && filteredBadges.length > 0 ? (
+    <section className="mx-auto py-20">
+      {isSuccess ? (
         <>
           <SectionHeader className="mb-8" title={title} />
           <BaseGrid>
