@@ -5,7 +5,7 @@ import { BaseCard } from '@/components/cards/BaseCard'
 export const ActionsView = () => {
   return (
     <>
-      <section className="my-8 flex flex-col gap-y-10 sm:mt-32">
+      <section className="flex flex-col gap-y-10 py-8 sm:pt-32">
         <h1 className="hidden text-center text-4xl font-bold sm:block">
           Otterspace Utils
         </h1>
