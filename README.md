@@ -1,6 +1,6 @@
 # Otterspace Utils
 
-<img width="992" alt="image" src="https://user-images.githubusercontent.com/18421017/217904077-5d04765a-a459-48b3-be3f-8c596d89e8ea.png">
+![Otterspace Utils Home](https://user-images.githubusercontent.com/18421017/217904077-5d04765a-a459-48b3-be3f-8c596d89e8ea.png)
 Otterspace Utils is an open-source frontend that provides a user interface for interacting with [Otterspace](https://github.com/otterspace-xyz). Badge holders can perform actions like burning their tokens, while community admins (Raft token holders) can transfer their Raft tokens and Reinstate/Revoke user badges.
 
 ## Installation
