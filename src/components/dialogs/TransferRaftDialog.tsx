@@ -1,38 +1,40 @@
-import { useState } from 'react'
-import { useAccount } from 'wagmi'
 import { BaseDialogProps } from '@/components/dialogs/BaseDialog'
 import { ContractActionDialog } from '@/components/dialogs/ContractActionDialog'
 import { BadgeCardProps } from '@/components/cards/BadgeCard'
-import { useOtterspaceContractsWrite } from '@/hooks/useOtterspaceContractsWrite'
 
 interface TransferBadgeDialogProps extends BadgeCardProps, BaseDialogProps {
+  toAddress: string
+  setToAddress: (toAddress: string) => void
+  onWrite: () => void
+  prepareContractWrite: any
+  contractWrite: any
+  waitForTransaction: any
+  address: string
+  chainId: number | undefined
   tokenId: string
 }
 export const TransferRaftDialog = ({
-  tokenId,
+  chainId,
+  toAddress,
+  setToAddress,
+  onWrite,
+  prepareContractWrite,
+  contractWrite,
+  waitForTransaction,
   isOpen,
   onClose,
   image,
   title
 }: TransferBadgeDialogProps) => {
-  const [toAddress, setToAddress] = useState<string>('')
-  const { address } = useAccount()
-
-  const {
-    chainId,
-    prepareContractWrite,
-    contractWrite,
-    waitForTransaction,
-    onWrite
-  } = useOtterspaceContractsWrite({
-    args: [address, toAddress, tokenId],
-    contract: 'RAFT',
-    functionName: 'safeTransferFrom(address,address,uint256)'
-  })
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     onWrite()
+  }
+
+  const handleClose = () => {
+    onClose()
+    setToAddress('')
+    contractWrite.reset()
   }
 
   return (
@@ -50,10 +52,7 @@ export const TransferRaftDialog = ({
       isError={waitForTransaction.isError}
       errorMessage={waitForTransaction.error?.message}
       isOpen={isOpen}
-      onClose={() => {
-        onClose()
-        contractWrite.reset()
-      }}
+      onClose={handleClose}
       isValidAction={prepareContractWrite.isSuccess}
       image={
         image
