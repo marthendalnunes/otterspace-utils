@@ -2,26 +2,24 @@ import type { BadgeCardProps } from '@/components/cards/BadgeCard'
 import { ContractActionDialog } from '@/components/dialogs/ContractActionDialog'
 
 import { BaseDialogProps } from '@/components/dialogs/BaseDialog'
-import { useOtterspaceContractsWrite } from '@/hooks/useOtterspaceContractsWrite'
 
 interface BurnBadgeDialogProps extends BadgeCardProps, BaseDialogProps {
-  tokenId: string
+  onWrite: () => void
+  chainId: number | undefined
+  contractWrite: any
+  waitForTransaction: any
 }
 
 export const BurnBadgeDialog = ({
-  tokenId,
+  chainId,
   isOpen,
   onClose,
   image,
-  title
+  title,
+  contractWrite,
+  waitForTransaction,
+  onWrite
 }: BurnBadgeDialogProps): JSX.Element => {
-  const { contractWrite, waitForTransaction, chainId, onWrite } =
-    useOtterspaceContractsWrite({
-      args: [tokenId],
-      contract: 'BADGES',
-      functionName: 'unequip'
-    })
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     onWrite()
