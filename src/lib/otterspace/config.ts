@@ -27,11 +27,23 @@ const OTTERSPACE_CONFIG = {
     badgeContractAddress: '0x147e0dF40fdD1340C604726c670329c08176F208',
     raftContractAddress: '0xa74caa864A2562999faf38280A3aA3d09c248daA',
     blockExplorer: 'https://polygonscan.com/'
-  }  
+  },
+  '11155111': {
+    url: 'https://api.thegraph.com/subgraphs/name/otterspace-xyz/badges-sepolia',
+    badgeContractAddress: '0x639a1703CfdeDaE61A535d53890130b4257f15eb',
+    raftContractAddress: '0xa74caa864A2562999faf38280A3aA3d09c248daA',
+    blockExplorer: 'https://sepolia.etherscan.io/'
+  }
 }
 
 export const getOtterspaceConfig = (chainId?: number) => {
-  if (chainId == 5 || chainId == 10 || chainId == 1 || chainId == 137) {
+  if (
+    chainId === 5 ||
+    chainId === 10 ||
+    chainId === 1 ||
+    chainId === 137 ||
+    chainId === 11155111
+  ) {
     return OTTERSPACE_CONFIG[chainId]
   }
   return OTTERSPACE_CONFIG[DEFAULT_NETWORK]
