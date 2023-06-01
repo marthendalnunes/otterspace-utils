@@ -29,7 +29,7 @@ const OTTERSPACE_CONFIG = {
     blockExplorer: 'https://polygonscan.com/'
   },
   '11155111': {
-    url: 'https://api.thegraph.com/subgraphs/name/otterspace-xyz/badges-sepolia',
+    url: 'https://api.studio.thegraph.com/query/44988/badges-sepolia/version/latest,
     badgeContractAddress: '0x639a1703CfdeDaE61A535d53890130b4257f15eb',
     raftContractAddress: '0xa74caa864A2562999faf38280A3aA3d09c248daA',
     blockExplorer: 'https://sepolia.etherscan.io/'
